@@ -1,0 +1,47 @@
+{% extends "main.html" %}
+{% block entity %}
+<div class="col-sm-9 col-md-9">
+            <div class="well">
+                <h3 class="panel-title">Wybrana biblioteka:</h3>
+            </div>
+            <div class="panel-body">
+            <section class="col-xs-12 col-sm-6 col-md-12">
+        <article class="search-result row">
+            
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <ul class="meta-search">
+                    <li><i class="glyphicon glyphicon-tags"></i> <span>{{library.type}}</span></li>
+                    <li><i class="glyphicon glyphicon-tags"></i> <span>{{library.chain}}</span></li>
+                    <li><i class="glyphicon glyphicon-globe"></i> <span>{{library.state}}</span></li>
+                </ul>
+                
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-10 excerpet">
+                <h3><a href="/entity/{{obj.id}}/" title="{{obj.name}}">{{library.name}}</a></h3>
+                <ul class="library-intro">
+                <li><i class="glyphicon glyphicon-user"></i>
+                            {{library.owner}} 
+                </li>
+                <li><i class="glyphicon glyphicon-map-marker"></i>
+                            {{library.city}},{{library.zip_code}},{{library.street}} 
+                </li>
+                <li><i class="glyphicon glyphicon-link"></i>
+                            {{library.url}}, {{library.email}}
+                </li>  
+                <li><i class="glyphicon glyphicon-phone"></i>
+                            {{library.phone}}
+                </li>   
+                <li><i class="glyphicon glyphicon-pencil"></i>
+                            {{library.notes}}
+                </li> 
+                <span class="border"></span>                    
+                <span class="plus">{{library.published}}{{ library.status }} {% if library.status == 'A' %}<i class="glyphicon glyphicon-ok-sign"></i>{% else %}<i class="glyphicon glyphicon-remove-sign"></i>{% endif %}</span>
+                </div>
+            
+        </article>
+        </section>
+            </div>
+            </div>
+        </div>
+            </div>
+    {% endblock %}   

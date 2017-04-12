@@ -1,0 +1,16 @@
+{% extends "main.html" %}
+
+{% block home %}
+
+{% for home in home %}
+	<div class="col-md-8 col-md-offset-2" >
+		
+		<h2>{{ home.title }}</h2>
+		<div>
+		<hr class="style_jd">
+		<div class="text/css">{% autoescape off %}{{ home.content }} {% endautoescape %}</div>
+		</div>
+	</div>
+{% endfor %}
+
+{% endblock %}  

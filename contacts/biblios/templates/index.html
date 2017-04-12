@@ -1,0 +1,236 @@
+{% extends "main.html" %}
+
+
+{% block home %}
+<div class="article"><!--  Artykul -->
+        <!--<form method="GET">
+                {{ filter.form.as_p }}
+
+                <button type="submit">Filtruj</button>
+                </form>-->
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div class="panel-group" id="accordion">
+            <form method="GET">            
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
+                            </span>Szukaj</a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+
+                            <table class="table">
+                                
+                               
+                                <tr>
+                                
+                                    <td>
+                                     <span class="glyphicon glyphicon-file text-info"></span>
+                                    {{ filter.form.name.label_tag }}
+                                    {{ filter.form.name }}
+        
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-search"></span> Szukaj
+                                    </button>
+                                    </td>
+                                </tr>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-folder-close">
+                            </span>Status</a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+
+                            <table class="table">
+                                
+                                {% for choice in filter.form.status %}
+                                <tr>
+                                
+                                    <td>
+                                        <span class="glyphicon glyphicon-file text-info"></span><a href="">{{ choice.tag }}{{ choice.choice_label}}</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-search"></span> Szukaj
+                                    </button>
+                                    </td>
+                                </tr>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTree"><span class="glyphicon glyphicon-folder-close">
+                            </span>Typ</a>
+                        </h4>
+                    </div>
+                    <div id="collapseTree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                {% for choice in filter.form.type %}
+                                <tr>
+                                
+                                    <td>
+                                        <span class="glyphicon glyphicon-file text-info"></span><a href="http://www.jquery2dotnet.com">{{ choice.tag }}{{ choice.choice_label}}</a>
+                                    </td>
+                                
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-search"></span> Szukaj
+                                    </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-folder-close">
+                            </span>Sieć</a>
+                        </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                {% for choice in filter.form.chain %}
+                                <tr>
+                                
+                                    <td>
+                                        <span class="glyphicon glyphicon-file text-info"></span><a href="http://www.jquery2dotnet.com">{{ choice.tag }}{{ choice.choice_label}}</a>
+                                    </td>
+                                
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-search"></span> Szukaj
+                                    </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive"><span class="glyphicon glyphicon-folder-close">
+                            </span>Województwo</a>
+                        </h4>
+                    </div>
+                    <div id="collapseFive" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                {% for choice in filter.form.state %}
+                                <tr>
+                                
+                                    <td>
+                                        <span class="glyphicon glyphicon-file text-info"></span><a href=" ">{{ choice.tag }}{{ choice.choice_label}}</a>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-search"></span> Szukaj
+                                    </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9 col-md-9">
+            <div class="well">
+                <h3 class="panel-title">Lista bibliotek:</h3>
+            </div>
+            {% for obj in filter.qs %}
+            <div class="panel-body">
+            <section class="col-xs-12 col-sm-6 col-md-12">
+        <article class="search-result row">
+            
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <ul class="meta-search">
+                    <li><i class="glyphicon glyphicon-tags"></i> <span>{{obj.type}}</span></li>
+                    <li><i class="glyphicon glyphicon-tags"></i> <span>{{obj.chain}}</span></li>
+                    <li><i class="glyphicon glyphicon-globe"></i> <span>{{obj.state}}</span></li>
+                </ul>
+                <span class="border"></span>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-10 excerpet">
+                <h3><a href="/entity/{{obj.id}}/" title="{{obj.name}}">{{obj.name}}</a></h3>
+                <ul class="library-intro">
+                <li><i class="glyphicon glyphicon-map-marker"></i>
+                            {{obj.city}},{{obj.street}} 
+                </li>
+                <li><i class="glyphicon glyphicon-link"></i>
+                            {{obj.url}}
+                </li>                        
+                <span class="plus">{{ obj.status }} {% if obj.status == 'A' %}<i class="glyphicon glyphicon-ok-sign"></i>{% else %}<i class="glyphicon glyphicon-remove-sign"></i>{% endif %}
+                <!-- old span<span class="plus"><a href="/entity/{{obj.id}}/" title="Zobacz"><i class="glyphicon --></i></a></span>
+                </ul>
+                </div>
+            
+        </article>
+        </section>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+            </div>
+        
+
+
+      </div>
+    </div>
+    <div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">poprzednia</a>
+        {% endif %}
+        </span>
+    <span class ="current">
+            Strona {{ objest_list.number }} z {{ object_list.paginator.num_pages }}.
+            </span>
+    <span class = "next">
+        {% if object_list.has_next %}
+            <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">następna</a>
+        {% endif %}
+        </span>
+        </div>
+{% endblock %}

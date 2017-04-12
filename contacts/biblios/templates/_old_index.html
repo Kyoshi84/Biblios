@@ -1,0 +1,93 @@
+{% extends "main.html" %}
+
+{% block search %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-11">
+            <form class="input-group" id="adv-search" method="GET" action=''>
+            <input type="text" class="form-control" id="inputSuccess5" name='q' placeholder="Szukaj..." value='{{ request.GET.q }}'>
+                    <div class="input-group-btn">
+                    
+                        
+                          
+                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
+</div>       
+<!--
+    <form class="input-group" method="GET" action=''>
+    
+        <div class="form-group  has-feedback">
+            <input type="text" class="form-control" id="inputSuccess5" name='q' placeholder="Szukaj..." value='{{ request.GET.q }}'>
+
+            <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+        </div>
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">Szukaj</button>
+        </span> -->
+
+   {% endblock %}                 
+
+{% block index %}
+<hgroup class="mb20">
+        <h1>Lista bibliotek</h1>
+        <h2 class="lead"><strong class="text-danger"></strong> <strong class="text-danger"></strong></h2>                               
+    </hgroup>
+
+<div class="col-sm-9 col-md-9">
+            <div class="well">
+                <h3 class="panel-title">Lista bibliotek:</h3>
+            </div>
+            {% for obj in object_list %}
+            <div class="panel-body">
+            <section class="col-xs-12 col-sm-6 col-md-12">
+        <article class="search-result row">
+            
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <ul class="meta-search">
+                    <li><i class="glyphicon glyphicon-tags"></i> <span>{{obj.type}}</span></li>
+                    <li><i class="glyphicon glyphicon-tags"></i> <span>{{obj.chain}}</span></li>
+                    <li><i class="glyphicon glyphicon-globe"></i> <span>{{obj.state}}</span></li>
+                </ul>
+                <span class="border"></span>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                <h3><a href="/entity/{{obj.id}}/" title="{{obj.name}}">{{obj.name}}</a></h3>
+                <ul class="library-intro">
+                <li><i class="glyphicon glyphicon-map-marker"></i>
+                            {{obj.city}},{{obj.street}} 
+                </li>
+                <li><i class="glyphicon glyphicon-link"></i>
+                            {{obj.url}}
+                </li>                        
+                <span class="plus"><a href="/entity/{{obj.id}}/" title="Zobacz"><i class="glyphicon glyphicon-plus"></i></a></span>
+                </div>
+            
+        </article>
+        </section>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+            </div>
+  
+ 
+<div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">poprzednia</a>
+        {% endif %}
+    <span class ="current">
+            Strona {{ objest_list.number }} z {{ object_list.paginator.num_pages }}.
+
+    <span class = "next">
+        {% if object_list.has_next %}
+            <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">następna</a>
+        {% endif %}
+        </div>
+        
+{% endblock %}         
