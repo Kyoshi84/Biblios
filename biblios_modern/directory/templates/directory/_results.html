@@ -1,0 +1,38 @@
+{% for library in libraries %}
+    <div class="card mb-2">
+        <div class="card-body d-flex justify-content-between">
+            <div>
+                <h5 class="card-title mb-1">
+                    <a href="{{ library.get_absolute_url }}">{{ library.name }}</a>
+                </h5>
+                <p class="card-text text-muted mb-0">
+                    {{ library.city }}{% if library.street %}, {{ library.street }}{% endif %}
+                    &middot; {{ library.get_type_display }} &middot; {{ library.get_state_display }}
+                </p>
+            </div>
+            <span class="badge {% if library.status == 'A' %}bg-success{% else %}bg-secondary{% endif %} align-self-start">
+                {{ library.get_status_display }}
+            </span>
+        </div>
+    </div>
+{% empty %}
+    <p class="text-muted">Brak wyników spełniających kryteria wyszukiwania.</p>
+{% endfor %}
+
+{% if is_paginated %}
+    <nav>
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}">poprzednia</a>
+                </li>
+            {% endif %}
+            <li class="page-item disabled"><span class="page-link">Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}</span></li>
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}">następna</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}

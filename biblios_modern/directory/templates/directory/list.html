@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <form method="get" id="search-form">
+            <div class="mb-3">
+                {{ search_form.q.label_tag }}
+                {{ search_form.q }}
+            </div>
+
+            <div class="accordion" id="filters">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#f-status">Status</button>
+                    </h2>
+                    <div id="f-status" class="accordion-collapse collapse show" data-bs-parent="#filters">
+                        <div class="accordion-body">{{ filter.form.status }}</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f-type">Typ</button>
+                    </h2>
+                    <div id="f-type" class="accordion-collapse collapse" data-bs-parent="#filters">
+                        <div class="accordion-body">{{ filter.form.type }}</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f-chain">Sieć</button>
+                    </h2>
+                    <div id="f-chain" class="accordion-collapse collapse" data-bs-parent="#filters">
+                        <div class="accordion-body">{{ filter.form.chain }}</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f-state">Województwo</button>
+                    </h2>
+                    <div id="f-state" class="accordion-collapse collapse" data-bs-parent="#filters">
+                        <div class="accordion-body">{{ filter.form.state }}</div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3 w-100">Szukaj</button>
+        </form>
+    </div>
+    <div class="col-md-9">
+        <h3>Lista bibliotek</h3>
+        <!-- #results jest też celem (hx-target) dynamicznego wyszukiwania
+             ustawionego w polu q (directory/forms.py) - wpisywanie tekstu
+             odpytuje serwer po 300ms bezczynności i podmienia tylko tę część. -->
+        <div id="results">
+            {% include "directory/_results.html" %}
+        </div>
+    </div>
+</div>
+{% endblock %}

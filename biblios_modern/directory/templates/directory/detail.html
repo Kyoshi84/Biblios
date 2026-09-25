@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ library.name }} - Biblios{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <span class="badge {% if library.status == 'A' %}bg-success{% else %}bg-secondary{% endif %} float-end">
+            {{ library.get_status_display }}
+        </span>
+        <h2>{{ library.name }}</h2>
+        <p class="text-muted">
+            {{ library.get_type_display }} &middot; {{ library.get_chain_display }} &middot; {{ library.get_state_display }}
+        </p>
+        <ul class="list-unstyled">
+            <li><strong>Organizator:</strong> {{ library.owner }}</li>
+            <li><strong>Adres:</strong> {{ library.city }}, {{ library.zip_code }} {{ library.street }}</li>
+            {% if library.url %}<li><strong>Strona:</strong> <a href="{{ library.url }}">{{ library.url }}</a></li>{% endif %}
+            {% if library.email %}<li><strong>Email:</strong> <a href="mailto:{{ library.email }}">{{ library.email }}</a></li>{% endif %}
+            {% if library.phone %}<li><strong>Telefon:</strong> {{ library.phone }}</li>{% endif %}
+            {% if library.siglum %}<li><strong>Siglum:</strong> {{ library.siglum }}</li>{% endif %}
+        </ul>
+        {% if library.notes %}<p>{{ library.notes|linebreaks }}</p>{% endif %}
+        <p class="text-muted small">Data wprowadzenia: {{ library.published }}</p>
+    </div>
+</div>
+<a href="{% url 'directory:index' %}" class="btn btn-link mt-3">&larr; Wróć do listy</a>
+{% endblock %}

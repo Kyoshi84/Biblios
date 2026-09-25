@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    {% for entry in home_entries %}
+        <div class="mb-4">
+            <h2>{{ entry.title }}</h2>
+            <hr>
+            {# autoescape off: treść pochodzi z panelu admina (zaufani redaktorzy), #}
+            {# nie od anonimowych użytkowników - bezpieczne tak samo jak w oryginale. #}
+            <div>{% autoescape off %}{{ entry.content }}{% endautoescape %}</div>
+        </div>
+    {% empty %}
+        <p class="text-muted">Brak treści strony startowej. Dodaj wpis w panelu admina (sekcja "Strona startowa").</p>
+    {% endfor %}
+    <a href="{% url 'directory:index' %}" class="btn btn-primary">Przeglądaj katalog bibliotek</a>
+{% endblock %}

@@ -1,0 +1,30 @@
+# Python 3.12+ / Django 5.2 LTS (wsparcie bezpieczeństwa do 04/2028)
+Django==5.2.*
+
+# Konfiguracja przez zmienne środowiskowe (12-factor), zamiast haseł na sztywno w settings.py
+django-environ==0.11.*
+
+# Filtrowanie listy (status/typ/sieć/województwo) - następca starego django_filters 0.x
+django-filter==24.*
+
+# Numery telefonów z walidacją - biblioteka wciąż aktywnie rozwijana, zostaje
+django-phonenumber-field[phonenumberslite]==8.*
+
+# Import/eksport CSV/XLS/XLSX z poziomu admina - zamiennik ręcznej akcji export_to_csv
+# oraz nieaktualnego django-haystack/unicodecsv
+django-import-export==4.*
+
+# Serwowanie plików statycznych w produkcji bez Nginx/S3 (opcjonalnie, ale zalecane)
+whitenoise==6.*
+
+# Serwer WSGI do produkcji (zamiast `runserver`)
+gunicorn==23.*
+
+# --- Baza danych: PostgreSQL (zalecana, patrz sekcja "Wyszukiwarka" w README) ---
+psycopg[binary]==3.*
+
+# --- Opcjonalnie, jeśli zostajemy przy edytorze WYSIWYG dla pola "notes" ---
+# django-ckeditor-5==0.2.*   # zamiennik dawnego, nierozwijanego już django-redactor
+
+# --- Narzędzia deweloperskie ---
+django-debug-toolbar==4.*
