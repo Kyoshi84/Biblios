@@ -127,6 +127,38 @@ Bez Postgresa: w `.env` ustaw `DATABASE_URL=sqlite:///db.sqlite3` —
 projekt wystartuje, wyszukiwarka przełączy się automatycznie na tryb
 `icontains` (patrz `directory/managers.py`).
 
+## Automatyczne wdrażanie (CI/CD) na Render.com
+
+Repozytorium zawiera `render.yaml` (tzw. Blueprint) w tym katalogu. Dzięki
+niemu Render sam tworzy i konfiguruje usługi opisane w tym pliku — nie
+trzeba pisać osobnego workflow w GitHub Actions ani logować się po SSH.
+
+**Jednorazowa konfiguracja:**
+1. Załóż konto na [render.com](https://render.com) (logowanie przez GitHub).
+2. „New +” → „Blueprint” → wskaż repozytorium `Kyoshi84/Biblios`. Render
+   sam znajdzie `biblios_modern/render.yaml`.
+3. Zatwierdź — Render utworzy usługę web (`biblios`) oraz bazę PostgreSQL
+   (`biblios-db`) i połączy je automatycznie przez `DATABASE_URL`.
+4. Pierwszy deploy potrwa kilka minut (instalacja zależności, `collectstatic`,
+   `migrate`). Potem aplikacja jest dostępna pod `https://biblios.onrender.com`
+   (albo pod docelową domeną, jeśli ją podepniesz w panelu Render).
+
+**Od tej pory automatyzacja jest pełna:** każdy push na gałąź `main` —
+również taki, który wykonuje tu Claude przez integrację z GitHub —
+automatycznie uruchamia build i deploy (`autoDeploy: true` w `render.yaml`).
+Nie trzeba nic więcej klikać ani konfigurować.
+
+**Uwagi:**
+- Darmowy plan usypia serwis po ~15 minutach bez ruchu (pierwsze żądanie po
+  przerwie budzi go z opóźnieniem rzędu kilkunastu sekund) i darmowa baza
+  wygasa po 90 dniach — wystarczające na start/demo, do produkcji warto
+  przejść na płatny plan (Starter, ok. $7/mies. za web + $6/mies. za bazę).
+- Superusera do panelu admina tworzy się jednorazowo przez zakładkę
+  „Shell” w panelu Render: `python manage.py createsuperuser`.
+- Jeśli wolisz własny VPS zamiast PaaS (pełna kontrola, bez usypiania) —
+  to też da się zautomatyzować, przez GitHub Actions + SSH/rsync +
+  systemd + Nginx; daj znać, przygotuję taki workflow jako alternatywę.
+
 ## Migracja danych ze starej wersji
 
 Stare dane (SQLite z `contacts/db.sqlite3`, jeśli istnieją) można

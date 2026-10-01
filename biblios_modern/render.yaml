@@ -1,0 +1,40 @@
+# Render.com "Blueprint" - Render wykrywa ten plik automatycznie po
+# połączeniu repozytorium i proponuje utworzenie poniższych usług jednym
+# kliknięciem ("New +" -> "Blueprint" -> wskaż to repo).
+#
+# Od tego momentu automatyzacja działa sama: każdy push na gałąź `main`
+# (czyli też każdy commit, który wypycha tu Claude przez integrację
+# GitHub) uruchamia buildCommand, a po jego sukcesie - deploy. Nie trzeba
+# pisać osobnego workflow w GitHub Actions ani logować się po SSH.
+databases:
+  - name: biblios-db
+    plan: free              # darmowe przez pierwsze 90 dni, potem trzeba przejść na płatny plan (patrz README)
+    databaseName: biblios
+    user: biblios
+
+services:
+  - type: web
+    name: biblios
+    runtime: python
+    plan: free               # usypia po 15 min bezczynności na free - wystarczające na start, patrz uwaga w README
+    region: frankfurt         # najbliżej Polski spośród regionów Render
+    rootDir: biblios_modern
+    buildCommand: >
+      pip install -r requirements.txt &&
+      python manage.py collectstatic --noinput &&
+      python manage.py migrate
+    startCommand: gunicorn config.wsgi:application
+    autoDeploy: true          # <- to jest cała automatyzacja: deploy przy każdym pushu na main
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true   # Render sam wygeneruje losowy, bezpieczny klucz
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: ""             # puste - domena *.onrender.com jest dodawana automatycznie w settings.py
+      - key: DATABASE_URL
+        fromDatabase:
+          name: biblios-db
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: "3.12.7"

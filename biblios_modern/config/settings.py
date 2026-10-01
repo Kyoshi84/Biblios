@@ -24,8 +24,13 @@ Zmiany względem starej wersji (Django 1.9/1.10):
 - Dodano django-import-export do obsługi CSV/XLS/XLSX (zastępuje ręczny,
   Python2-owy actions.py z pakietem unicodecsv).
 - Dodano WhiteNoise do serwowania plików statycznych w produkcji.
+- Dodano obsługę zmiennej RENDER_EXTERNAL_HOSTNAME, którą Render.com
+  wstrzykuje automatycznie w środowisku produkcyjnym (patrz render.yaml)
+  - dzięki temu nie trzeba ręcznie wpisywać domeny *.onrender.com do
+  ALLOWED_HOSTS/CSRF_TRUSTED_ORIGINS po każdym deployu.
 """
 
+import os
 from pathlib import Path
 
 import environ
@@ -38,6 +43,15 @@ environ.Env.read_env(BASE_DIR / ".env")
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 DEBUG = env("DJANGO_DEBUG")
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+CSRF_TRUSTED_ORIGINS = env.list("DJANGO_CSRF_TRUSTED_ORIGINS", default=[])
+
+# Render.com wstawia tę zmienną automatycznie dla każdego serwisu web -
+# https://render.com/docs/environment-variables - nie trzeba jej ustawiać
+# ręcznie w panelu, wystarczy że render.yaml jest w repo (patrz niżej).
+RENDER_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_HOSTNAME)
+    CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_HOSTNAME}")
 
 # Baza danych: PostgreSQL zalecany (pełnotekstowe wyszukiwanie + trigramy,
 # patrz directory/managers.py i README). Działa też na SQLite (fallback na
@@ -138,6 +152,10 @@ PHONENUMBER_DEFAULT_REGION = "PL"
 
 # Bezpieczeństwo produkcyjne - aktywne tylko gdy DEBUG=False.
 if not DEBUG:
+    # Render (i większość PaaS) terminuje SSL na swoim reverse proxy i do
+    # aplikacji przekazuje już zwykłe HTTP - bez tego nagłówka
+    # SECURE_SSL_REDIRECT wpadłby w nieskończoną pętlę przekierowań.
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
