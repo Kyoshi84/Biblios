@@ -11,6 +11,11 @@ databases:
     plan: free              # darmowe przez pierwsze 90 dni, potem trzeba przejść na płatny plan (patrz README)
     databaseName: biblios
     user: biblios
+    region: frankfurt        # MUSI być ten sam region co serwis web poniżej -
+                              # wewnętrzny hostname bazy (dpg-...) jest widoczny
+                              # tylko w sieci prywatnej jednego regionu. Różne
+                              # regiony = "Name or service not known" przy
+                              # próbie migrate w kroku build.
 
 services:
   - type: web
